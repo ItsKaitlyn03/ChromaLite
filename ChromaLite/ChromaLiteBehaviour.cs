@@ -17,8 +17,8 @@ namespace ChromaLite {
         IEnumerator ReadEvents() {
             yield return new WaitForSeconds(0f);
 
-            GameplayCoreSceneSetup gameplayCoreSceneSetup = Resources.FindObjectsOfTypeAll<GameplayCoreSceneSetup>().First();
-            BeatmapDataModel dataModel = gameplayCoreSceneSetup.GetField<BeatmapDataModel>("_beatmapDataModel");
+            MainGameSceneSetup mainGameSceneSetup = Resources.FindObjectsOfTypeAll<MainGameSceneSetup>().First();
+            BeatmapDataModel dataModel = mainGameSceneSetup.GetField<BeatmapDataModel>("_beatmapDataModel");
 
             BeatmapData beatmapData = ReadBeatmapEvents(dataModel.beatmapData, ChromaLiteConfig.RGBLightsEnabled, ChromaLiteConfig.SpecialEventsEnabled);
 

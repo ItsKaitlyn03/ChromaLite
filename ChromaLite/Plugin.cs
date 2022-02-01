@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using IllusionInjector;
 using IllusionPlugin;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace ChromaLite {
 
         public static bool CTInstalled = false;
 
-        HarmonyInstance harmony = HarmonyInstance.Create("net.binaryelement.chromalite");
+        Harmony harmony = new Harmony("net.binaryelement.chromalite");
 
         public void OnApplicationStart() {
 
@@ -26,33 +26,20 @@ namespace ChromaLite {
             harmony.PatchAll(System.Reflection.Assembly.GetExecutingAssembly());
             //ChromaLogger.Log("Harmonized");
 
-            SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
             SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-        }
-
-        private void SceneManagerOnActiveSceneChanged(Scene current, Scene next) {
-            if (current.name == "GameCore") {
-                if (next.name != "GameCore") {
-                    //ChromaLogger.Log("Transitioning out of GameCore");
-                    return;
-                }
-            } else {
-                if (next.name == "GameCore") {
-                    //ChromaLogger.Log("Transitioning into GameCore");
-                    new GameObject("ChromaLiteReader").AddComponent<ChromaLiteBehaviour>();
-                    return;
-                }
-            }
         }
 
         private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1) {
             if (arg0.name == "Menu" && !CTInstalled) {
                 ChromaLiteConfig.InitializeMenu();
+            } else if (arg0.name == "GameCore") {
+                //ChromaLogger.Log("Transitioning into GameCore");
+                new GameObject("ChromaLiteReader").AddComponent<ChromaLiteBehaviour>();
+                return;
             }
         }
 
         public void OnApplicationQuit() {
-            SceneManager.activeSceneChanged -= SceneManagerOnActiveSceneChanged;
             SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
         }
 
