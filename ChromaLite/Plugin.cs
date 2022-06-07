@@ -5,10 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ChromaLite {
-    public class Plugin : IPlugin {
-
-        public string Name => "ChromaLite";
-        public string Version => "1.0.2";
+    public class Plugin {
 
         public static bool CTInstalled = false;
 
@@ -41,22 +38,6 @@ namespace ChromaLite {
 
         public void OnApplicationQuit() {
             SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
-        }
-
-        public void OnLevelWasLoaded(int level) {
-
-        }
-
-        public void OnLevelWasInitialized(int level) {
-
-        }
-
-        public void OnUpdate() {
-
-        }
-
-        public void OnFixedUpdate() {
-
         }
 
         public static bool ChromaToggleInstalled() {
